@@ -63,8 +63,8 @@ class DMBMSNet(nn.Module):
             num_classes = num_classes,
             num_blocks  = num_encoder_blocks - 1,
             base_dim    = base_dim,
-            num_heads   = num_heads,
-            k           = k,
+            #num_heads   = num_heads,
+            #k           = k,
             deformable  = deformable
         )
 
@@ -72,7 +72,7 @@ class DMBMSNet(nn.Module):
         if use_crf:
             self.hierarchical_dense_crf = HierarchicalDenseCRF(
                 num_classes        = num_classes, 
-                num_iterations     = 5,
+                num_iterations     = 3,
                 num_encoder_blocks = num_encoder_blocks, 
                 base_dim           = base_dim
             )
@@ -145,7 +145,7 @@ class DMBMSNet(nn.Module):
         # STEP 9: Pass through HierarchicalCRF
 
         if self.use_crf:
-            predicted_masks = self.enhanced_hierarchical_crf(predicted_masks, x, skip_connections)
+            predicted_masks = self.hierarchical_dense_crf(predicted_masks, x, skip_connections)
 
         # STEP 10: Pass through MemoryEncoder + Update MemoryBank
 

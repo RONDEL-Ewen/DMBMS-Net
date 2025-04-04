@@ -63,8 +63,8 @@ class MaskDecoder(nn.Module):
         num_classes: int  = 2,
         num_blocks:  int  = 4,
         base_dim:    int  = 64,
-        num_heads:   int  = 8,
-        k:           int  = 5,
+        #num_heads:   int  = 8,
+        #k:           int  = 5,
         deformable:  bool = True
     ):
         super(MaskDecoder, self).__init__()
@@ -75,7 +75,8 @@ class MaskDecoder(nn.Module):
         # Create decoder blocks in reverse order of the encoder
         for i in range(num_blocks - 1, -1, -1):
             next_dim = base_dim * (2 ** i)
-            self.blocks.append(DecoderBlock(current_dim, next_dim, num_heads = num_heads, k = k, deformable = deformable))
+            #self.blocks.append(DecoderBlock(current_dim, next_dim, num_heads = num_heads, k = k, deformable = deformable))
+            self.blocks.append(DecoderBlock(current_dim, next_dim, deformable = deformable))
             current_dim = next_dim
 
         # Segmentation Head
