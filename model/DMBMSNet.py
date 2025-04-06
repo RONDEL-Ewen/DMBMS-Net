@@ -145,7 +145,7 @@ class DMBMSNet(nn.Module):
         # STEP 9: Pass through HierarchicalCRF
 
         if self.use_crf:
-            predicted_masks = self.hierarchical_dense_crf(predicted_masks, x, skip_connections)
+            predicted_masks = self.hierarchical_dense_crf(predicted_masks, x, skip_connections, True)
 
         # STEP 10: Pass through MemoryEncoder + Update MemoryBank
 
